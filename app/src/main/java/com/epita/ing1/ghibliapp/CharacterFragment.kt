@@ -4,6 +4,7 @@ package com.epita.ing1.ghibliapp
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,9 +35,16 @@ class CharacterFragment : Fragment() {
         val character = arguments!!.getSerializable("character") as Character
         Log.d("debug", character.name)
         text_view_character_name.text = character.name
+        image_view_character_gender.text = character.gender
         text_view_character_age.text = "Age : " + character.age
         text_view_eye_color.text = "Eyes color: " + character.eye_color
         text_view_hair_color.text = "Hair color: " + character.hair_color
+        recycler_view_character_movies.setHasFixedSize(true)
+        recycler_view_character_movies.layoutManager = LinearLayoutManager(
+                activity,
+                LinearLayoutManager.VERTICAL,
+                false)
+        recycler_view_character_movies.adapter = CharacterMovieAdapter(context!!, character.films)
     }
 
     companion object {

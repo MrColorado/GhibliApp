@@ -50,10 +50,7 @@ class CharacterListFragment : Fragment() {
             // we retrieve the row position from its tag
             val position = it.tag as Int
             val clickedItem = mdata[position]
-
-
             val myFragment = CharacterFragment.newInstance(clickedItem)
-
             val fragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction.replace(R.id.main_container, myFragment)
             fragmentTransaction.commit()
