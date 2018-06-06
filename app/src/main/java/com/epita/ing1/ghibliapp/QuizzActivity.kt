@@ -38,14 +38,32 @@ class QuizzActivity : AppCompatActivity() {
         val jsonConv = GsonConverterFactory.create(GsonBuilder().create())
 
         val retrofit = Retrofit.Builder()
-                .baseUrl()
+                .baseUrl("https://ghibliapi.herokuapp.com/")
                 .addConverterFactory(jsonConv)
                 .build()
 
         val service = retrofit.create(PeopleQuizz::class.java)
 
         val callback = object  : Callback<List<PeopleQuizz>> {
+            override fun onFailure(call: Call<List<PeopleQuizz>>?, t: Throwable?) {
+// Code here what happens if calling the WebService fails
+                //button.text = "FAIL1"
+            }
 
+            override fun onResponse(call: Call<List<PeopleQuizz>>?, response: Response<List<PeopleQuizz>>?) {
+// Code here what happens when WebService responds
+                // button.text = "Fail2"
+                if (response != null) {
+                    // button.text = "Fail3"
+                    if (response.code() == 200) {
+                        val responseData = response.body()
+                        if (responseData != null) {
+                            // data.addAll(responseData)
+                            // data.shuffle()
+                        }
+                    }
+                }
+            }
         }
     }
 }
