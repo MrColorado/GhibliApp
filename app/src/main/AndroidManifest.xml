@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".QuizzActivity"></activity>
-        <activity android:name=".CharactersActivity"></activity>
+        <activity android:name=".CharacterActivity" android:exported="true"></activity>
     </application>
 
 </manifest>

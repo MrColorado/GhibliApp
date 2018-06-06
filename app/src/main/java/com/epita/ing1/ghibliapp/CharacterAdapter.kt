@@ -17,7 +17,7 @@ class CharacterAdapter(val data: MutableList<Character>, val context: Context) :
             else -> convertView
         }
 
-        val nameTextView = rowView.findViewById<TextView>(R.id.) // FIX
+        val nameTextView = rowView.findViewById<TextView>(R.id.character_list) // FIX
         nameTextView.text = getItem(position).name
         return rowView
     }
