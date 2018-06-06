@@ -1,20 +1,14 @@
 package com.epita.ing1.ghibliapp
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.recycler_view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.android.synthetic.main.character.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,58 +22,30 @@ private const val ARG_PARAM2 = "param2"
  */
 class CharacterFragment : Fragment() {
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.recycler_view, container, false)
+        return inflater.inflate(R.layout.character, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val mdata : MutableList<Character> = arrayListOf()
-        val baseURL = "https://ghibliapi.herokuapp.com"
-        val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
-        val retrofit = Retrofit.Builder()
-                .baseUrl(baseURL)
-                .addConverterFactory(jsonConverter)
-                .build()
-        val service: CharacterInterface = retrofit.create(CharacterInterface::class.java)
+        val character = arguments!!.getSerializable("character") as Character
+        Log.d("debug", character.name)
+        text_view_character_name.text = character.name
+        text_view_character_age.text = "Age : " + character.age
+        text_view_eye_color.text = "Eyes color: " + character.eye_color
+        text_view_hair_color.text = "Hair color: " + character.hair_color
+    }
 
-        val myItemClickListener = View.OnClickListener {
-            // we retrieve the row position from its tag
-            val position = it.tag as Int
-            val clickedItem = mdata[position]
-            // do stuff
-            Toast.makeText(
-                    context,
-                    "Clicked " + clickedItem.name,
-                    Toast.LENGTH_SHORT)
-                    .show()
+    companion object {
+        fun newInstance(character: Character): CharacterFragment {
+            val args = Bundle()
+            args.putSerializable("character", character)
+            val fragment = CharacterFragment()
+            fragment.arguments = args
+            return fragment
         }
-
-        val callback = object : Callback<List<Character>> {
-            override fun onFailure(call: Call<List<Character>>?, t: Throwable?) {
-            }
-
-            override fun onResponse(call: Call<List<Character>>?, response: Response<List<Character>>?) {
-                if (response != null) {
-                    if (response.code() == 200) {
-                        // We got our data !
-                        val responseData = response.body()
-                        if (responseData != null) {
-                            mdata.addAll(responseData)
-                            character_recycler.setHasFixedSize(true)
-                            character_recycler.layoutManager = LinearLayoutManager(
-                                    activity,
-                                    LinearLayoutManager.VERTICAL,
-                                    false)
-                            character_recycler.adapter = CharacterAdapter(context!!, mdata, myItemClickListener)
-                        }
-                    }
-                }
-            }
-        }
-        service.listCharacter().enqueue(callback)
     }
 }
