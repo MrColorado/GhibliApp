@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 class CharacterMovieAdapter(val context: Context,
-                            val data: List<String>) :
+                            val data: List<String>,
+                            private val onItemClickListener: View.OnClickListener) :
         RecyclerView.Adapter<CharacterMovieAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,6 +24,7 @@ class CharacterMovieAdapter(val context: Context,
         val rowView = LayoutInflater
                 .from(context)
                 .inflate(R.layout.character_movie_list, parent, false)
+        rowView.setOnClickListener(onItemClickListener)
         val viewHolder = ViewHolder(rowView)
         return viewHolder
     }
@@ -30,5 +32,6 @@ class CharacterMovieAdapter(val context: Context,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = data[position]
         holder.nameTextView.text = currentItem
+        holder.itemView.tag = position
     }
 }
