@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 class CharacterAdapter(val context: Context,
-                       val data: MutableList<Character>) :
+                       val data: MutableList<Character>,
+                       private val onItemClickListener: View.OnClickListener) :
         RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,6 +24,7 @@ class CharacterAdapter(val context: Context,
         val rowView = LayoutInflater
                 .from(context)
                 .inflate(R.layout.character_list ,parent, false)
+        rowView.setOnClickListener(onItemClickListener)
         val viewHolder = ViewHolder(rowView)
         return viewHolder
     }
@@ -30,6 +32,6 @@ class CharacterAdapter(val context: Context,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = data[position]
         holder.nameTextView.text = currentItem.name
-        //holder.alignmentImageView.setImageResource(R.drawable.logo)
+        holder.itemView.tag = position
     }
 }
