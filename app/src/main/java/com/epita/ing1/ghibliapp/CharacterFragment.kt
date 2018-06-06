@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.epita.ing1.ghibliapp.R.layout.character_list
+import android.widget.Toast
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.recycler_view.*
 import retrofit2.Call
@@ -46,6 +46,18 @@ class CharacterFragment : Fragment() {
                 .build()
         val service: CharacterInterface = retrofit.create(CharacterInterface::class.java)
 
+        val myItemClickListener = View.OnClickListener {
+            // we retrieve the row position from its tag
+            val position = it.tag as Int
+            val clickedItem = mdata[position]
+            // do stuff
+            Toast.makeText(
+                    context,
+                    "Clicked " + clickedItem.name,
+                    Toast.LENGTH_SHORT)
+                    .show()
+        }
+
         val callback = object : Callback<List<Character>> {
             override fun onFailure(call: Call<List<Character>>?, t: Throwable?) {
             }
@@ -62,7 +74,7 @@ class CharacterFragment : Fragment() {
                                     activity,
                                     LinearLayoutManager.VERTICAL,
                                     false)
-                            character_recycler.adapter = CharacterAdapter(context!!, mdata)
+                            character_recycler.adapter = CharacterAdapter(context!!, mdata, myItemClickListener)
                         }
                     }
                 }
