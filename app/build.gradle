@@ -25,28 +25,28 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    // AppCompat package, in charge of making recent Android features work in older os versions
     implementation 'com.android.support:appcompat-v7:27.1.1'
+
+    // The constraint layout we use is not part of the Android sdk
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:design:27.1.1'
 
     // Import retrofit lib in our project
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+
     // Also add a retrofit plugin to handle json responses
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
     // To load images
     implementation "com.squareup.picasso:picasso:2.4.0"
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // Imports kotlin, could prove useful eventually
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    // AppCompat package, in charge of making recent Android features work in older os versions
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    // The constraint layout we use is not part of the Android sdk
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    // Add recyclerview to module
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+
     // Testing stuff
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
