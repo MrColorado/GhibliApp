@@ -7,7 +7,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.epita.ing1.ghibliapp.R.layout.character_list
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.recycler_view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,16 +38,36 @@ class CharacterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val mdata : MutableList<Character> = arrayListOf()
-        val movies = listOf("Star Wars")
+        val baseURL = "https://ghibliapi.herokuapp.com"
+        val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
+        val retrofit = Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(jsonConverter)
+                .build()
+        val service: CharacterInterface = retrofit.create(CharacterInterface::class.java)
 
-        mdata.add(Character("1", "Han Solo", "Male", "Green", movies, "Humain", "none"))
-        mdata.add(Character("1", "Darth Vader", "Male", "Green", movies, "Humain", "none"))
+        val callback = object : Callback<List<Character>> {
+            override fun onFailure(call: Call<List<Character>>?, t: Throwable?) {
+            }
 
-        character_recycler.setHasFixedSize(true)
-        character_recycler.layoutManager = LinearLayoutManager(
-                activity,
-                LinearLayoutManager.VERTICAL,
-                false)
-        character_recycler.adapter = CharacterAdapter(this.context!!, mdata)
+            override fun onResponse(call: Call<List<Character>>?, response: Response<List<Character>>?) {
+                if (response != null) {
+                    if (response.code() == 200) {
+                        // We got our data !
+                        val responseData = response.body()
+                        if (responseData != null) {
+                            mdata.addAll(responseData)
+                            character_recycler.setHasFixedSize(true)
+                            character_recycler.layoutManager = LinearLayoutManager(
+                                    activity,
+                                    LinearLayoutManager.VERTICAL,
+                                    false)
+                            character_recycler.adapter = CharacterAdapter(context!!, mdata)
+                        }
+                    }
+                }
+            }
+        }
+        service.listCharacter().enqueue(callback)
     }
 }
