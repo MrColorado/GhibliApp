@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
-        fragmentTransaction.replace(R.id.main_container, CharacterFragment())
+        fragmentTransaction.replace(R.id.main_container, CharacterListFragment())
 
         fragmentTransaction.commit()
     }
