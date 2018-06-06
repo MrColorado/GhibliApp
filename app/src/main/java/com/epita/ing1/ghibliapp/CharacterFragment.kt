@@ -2,6 +2,8 @@ package com.epita.ing1.ghibliapp
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -39,12 +41,23 @@ class CharacterFragment : Fragment() {
         text_view_character_age.text = "Age : " + character.age
         text_view_eye_color.text = "Eyes color: " + character.eye_color
         text_view_hair_color.text = "Hair color: " + character.hair_color
+
+        val myItemClickListener = View.OnClickListener {
+            // we retrieve the row position from its tag
+            val position = it.tag as Int
+            val clickedItem = character.films[position]
+            val implicitIntent = Intent(Intent.ACTION_VIEW)
+            implicitIntent.data = Uri.parse( clickedItem)
+            startActivity(implicitIntent)
+        }
+
         recycler_view_character_movies.setHasFixedSize(true)
         recycler_view_character_movies.layoutManager = LinearLayoutManager(
                 activity,
                 LinearLayoutManager.VERTICAL,
                 false)
-        recycler_view_character_movies.adapter = CharacterMovieAdapter(context!!, character.films)
+        recycler_view_character_movies.adapter = CharacterMovieAdapter(context!!, character.films, myItemClickListener)
+
     }
 
     companion object {
