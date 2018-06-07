@@ -1,17 +1,16 @@
 package com.epita.ing1.ghibliapp
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import com.google.gson.GsonBuilder
 
 // 4 Questions People
 // 3 Questions about species
@@ -28,17 +27,6 @@ data class PeopleQuizz(
         val films: MutableList<String>,
         val species: String,
         val url: String)
-*/
-
-/*
-data class Movie(
-        val id: String,
-        val title: String,
-        val description: String,
-        val director: String,
-        val producer: String,
-        val release_date: Int,
-        val rt_score: Int)
 */
 
 class QuizzActivity : AppCompatActivity() {
