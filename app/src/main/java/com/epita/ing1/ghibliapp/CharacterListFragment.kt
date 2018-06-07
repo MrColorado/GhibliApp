@@ -52,7 +52,7 @@ class CharacterListFragment : Fragment() {
             val clickedItem = mdata[position]
             val myFragment = CharacterFragment.newInstance(clickedItem)
             val fragmentTransaction = fragmentManager!!.beginTransaction()
-            fragmentTransaction.replace(R.id.main_container, myFragment)
+            fragmentTransaction.replace(R.id.main_container, myFragment).addToBackStack("Character")
             fragmentTransaction.commit()
         }
 

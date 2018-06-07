@@ -11,8 +11,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-
-        fragmentTransaction.replace(R.id.main_container, CharacterListFragment())
+        fragmentTransaction.replace(R.id.main_container, CharacterListFragment()).addToBackStack("CharacterList")
 
         fragmentTransaction.commit()
     }
