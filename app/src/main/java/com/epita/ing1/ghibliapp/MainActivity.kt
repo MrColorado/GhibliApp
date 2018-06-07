@@ -2,6 +2,7 @@ package com.epita.ing1.ghibliapp
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.main_menu.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_container, CharacterListFragment()).addToBackStack("CharacterList")
+        fragmentTransaction.replace(R.id.main_container, MainMenuFragment()).addToBackStack("CharacterList")
 
         fragmentTransaction.commit()
     }
