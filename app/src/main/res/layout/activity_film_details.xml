@@ -20,14 +20,13 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
-        android:id="@+id/iconView"
+        android:id="@+id/film_details_iconView"
         android:layout_width="0dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toTopOf="@+id/film_details_movieTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activityTitleView"
-        app:srcCompat="@drawable/movie_details_icon" />
+        app:layout_constraintTop_toBottomOf="@id/activityTitleView" />
 
     <TextView
         android:id="@+id/film_details_movieTitle"
@@ -35,42 +34,30 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:textSize="20sp"
-        android:gravity="end"
+        android:gravity="center"
         android:text="Movie title"
-        app:layout_constraintEnd_toStartOf="@id/film_details_movieYear"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iconView" />
+        app:layout_constraintTop_toBottomOf="@id/film_details_iconView" />
 
     <TextView
         android:id="@+id/film_details_movieDirector"
-        app:layout_constraintTop_toBottomOf="@id/film_details_movieTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="18sp"
-        android:text="Made by "
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/film_details_movieYear"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:textSize="16sp"
-        android:gravity="start"
-        android:text="(19xx)"
+        android:layout_marginTop="16dp"
+        android:text="Made by "
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/film_details_movieTitle"
-        app:layout_constraintStart_toEndOf="@id/film_details_movieTitle"
-        app:layout_constraintTop_toBottomOf="@id/iconView" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/film_details_movieTitle" />
+
 
     <TextView
         android:id="@+id/film_details_movieDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="Blablabla"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
