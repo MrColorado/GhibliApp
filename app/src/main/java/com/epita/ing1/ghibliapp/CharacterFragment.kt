@@ -37,8 +37,9 @@ class CharacterFragment : Fragment() {
         val character = arguments!!.getSerializable("character") as Character
         if (character.gender == "Female")
             image_view_gender.setImageResource(R.drawable.female)
+        text_view_description_movie.text = "Lien vers les descriptions des film du personage: "
         text_view_character_name.text = character.name
-        text_view_character_age.text = "Age : " + character.age
+        text_view_character_age.text = "Age: " + character.age
         text_view_eye_color.text = "Eyes color: " + character.eye_color
         text_view_hair_color.text = "Hair color: " + character.hair_color
 
