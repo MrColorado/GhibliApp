@@ -35,9 +35,9 @@ class CharacterFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val character = arguments!!.getSerializable("character") as Character
-        Log.d("debug", character.name)
+        if (character.gender == "Female")
+            image_view_gender.setImageResource(R.drawable.female)
         text_view_character_name.text = character.name
-        image_view_character_gender.text = character.gender
         text_view_character_age.text = "Age : " + character.age
         text_view_eye_color.text = "Eyes color: " + character.eye_color
         text_view_hair_color.text = "Hair color: " + character.hair_color
