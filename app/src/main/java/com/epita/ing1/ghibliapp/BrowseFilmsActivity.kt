@@ -1,24 +1,23 @@
 package com.epita.ing1.ghibliapp
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_browse_films.*
-import kotlinx.android.synthetic.main.activity_browse_films.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class BrowseFilmsActivity : AppCompatActivity() {
+class BrowseFilmsActivity : AppCompatActivity(), View.OnClickListener {
 
-    val API_BASE_URL = "https://ghibliapi.herokuapp.com/"
+    var data: ArrayList<Movie> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +31,8 @@ class BrowseFilmsActivity : AppCompatActivity() {
                 false
         )
 
-        // Init data (movies list) to give to Adapter
-        val data = ArrayList<Movie>()
-        // Use GSON library to create our JSON parser
         val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
-        // Create a Retrofit client object targeting the provided URL
-        // and add a JSON converter (because we are expecting json responses)
-        val retrofit = Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(jsonConverter).build()
-        // Use the client to create a service:
-        // an object implementing the interface to the WebService
+        val retrofit = Retrofit.Builder().baseUrl("https://ghibliapi.herokuapp.com/").addConverterFactory(jsonConverter).build()
         val service: WSInterface = retrofit.create(WSInterface::class.java)
         val callback = object : Callback<List<Movie>> {
             override fun onFailure(call: Call<List<Movie>>?, t: Throwable?) {
@@ -53,8 +45,16 @@ class BrowseFilmsActivity : AppCompatActivity() {
                         val responseData = response.body()
                         if (responseData != null) {
                             for (movie in responseData) {
-                                data.add(Movie(movie.title))
+                                data.add(Movie(
+                                        movie.id,
+                                        movie.title,
+                                        movie.description,
+                                        movie.director,
+                                        movie.producer,
+                                        movie.release_date,
+                                        movie.rt_score))
                             }
+                            moviesList.adapter = MovieListRecyclerAdapter(this@BrowseFilmsActivity, data, this@BrowseFilmsActivity)
                         }
                     }
                 }
@@ -62,21 +62,28 @@ class BrowseFilmsActivity : AppCompatActivity() {
         }
         service.getFilms().enqueue(callback)
 
-        // Google removed ItemClickListener in RecyclerView so we have to do it ourselves
-        val myItemClickListener = View.OnClickListener {
-            clickedView ->
-            // we retrieve the row position from its tag
-            val position = clickedView.tag as Int
-            val clickedItem = data[position]
-            // do stuff
-            Toast.makeText(
-                    this,
-                    "Clicked " + clickedItem.title,
-                    Toast.LENGTH_SHORT)
-                    .show()
-        }
+    }
 
-        //moviesList.emptyView = emptyListTextView
-        moviesList.adapter = MovieListRecyclerAdapter(this , data, myItemClickListener)
+    // Google removed ItemClickListener in RecyclerView so we have to do it ourselves
+    override fun onClick(clickedView: View?) {
+        // we retrieve the row position from its tag
+        val position = clickedView!!.tag as Int
+        val clickedItem = data[position]
+        // do stuff
+        Toast.makeText(
+                this,
+                "Clicked " + clickedItem.title,
+                Toast.LENGTH_SHORT)
+                .show()
+        val explicitIntent = Intent(
+                this@BrowseFilmsActivity,
+                FilmDetailsActivity::class.java
+        )
+        explicitIntent.putExtra("title", clickedItem.title)
+        explicitIntent.putExtra("year", clickedItem.release_date)
+        explicitIntent.putExtra("director", clickedItem.director)
+        explicitIntent.putExtra("description", clickedItem.description)
+
+        startActivity(explicitIntent)
     }
 }
