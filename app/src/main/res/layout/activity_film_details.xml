@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FilmDetailsActivity">
+
+    <TextView
+        android:id="@+id/activityTitleView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Movie details"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iconView"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/film_details_movieTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activityTitleView"
+        app:srcCompat="@drawable/movie_details_icon" />
+
+    <TextView
+        android:id="@+id/film_details_movieTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:textSize="20sp"
+        android:gravity="end"
+        android:text="Movie title"
+        app:layout_constraintEnd_toStartOf="@id/film_details_movieYear"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iconView" />
+
+    <TextView
+        android:id="@+id/film_details_movieDirector"
+        app:layout_constraintTop_toBottomOf="@id/film_details_movieTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
+        android:text="Made by "
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/film_details_movieYear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        android:gravity="start"
+        android:text="(19xx)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/film_details_movieTitle"
+        app:layout_constraintStart_toEndOf="@id/film_details_movieTitle"
+        app:layout_constraintTop_toBottomOf="@id/iconView" />
+
+    <TextView
+        android:id="@+id/film_details_movieDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Blablabla"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/film_details_movieDirector" />
+
+    <Button
+        android:id="@+id/film_details_googleSearchButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Search with Google"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>
