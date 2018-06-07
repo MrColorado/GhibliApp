@@ -30,21 +30,25 @@ data class PeopleQuizz(
         val url: String)
 */
 
+data class Movie(
+        val id: String,
+        val title: String,
+        val description: String,
+        val director: String,
+        val producer: String,
+        val release_date: Int,
+        val rt_score: Int)
+
 
 class QuizzActivity : AppCompatActivity() {
 
     var tabAn: MutableList<Button> = mutableListOf()
-
     var tabLab: MutableList<TextView> = mutableListOf()
-
     var score: Int = 0
-
     var count: Int = 1
-
     var max: Int = 10
-
     var quests: MutableList<QuizzItem> = mutableListOf()
-
+    var movies_str: MutableList<String> = mutableListOf()
     var currentQuest: QuizzItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +82,21 @@ class QuizzActivity : AppCompatActivity() {
                 .addConverterFactory(jsonConverter)
                 .build()
         val service: CharacterInterface = retrofit.create(CharacterInterface::class.java)
+
+        val callbackMovie = object : Callback<Movie> {
+            override fun onFailure(call: Call<Movie>?, t: Throwable?) {}
+
+            override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
+                if (response != null) {
+                    if (response.code() == 200) {
+                        val responseData = response.body()
+                        if (responseData != null) {
+
+                        }
+                    }
+                }
+            }
+        }
 
         val callback = object : Callback<List<Character>> {
             override fun onFailure(call: Call<List<Character>>?, t: Throwable?) {}
