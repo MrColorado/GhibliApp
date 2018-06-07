@@ -9,5 +9,5 @@ interface WSInterface {
     fun getFilms() : Call<List<Movie>>
 
     @GET("films")
-    fun getFilmDetails(@Query("id") movidId : Int) : Call<MovieDetails>
+    fun getFilmDetails() : Call<List<MovieDetails>>
 }

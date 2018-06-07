@@ -37,27 +37,21 @@ class CharacterFragment : Fragment() {
         val character = arguments!!.getSerializable("character") as Character
         if (character.gender == "Female")
             image_view_gender.setImageResource(R.drawable.female)
-        text_view_description_movie.text = "Lien vers les descriptions des film du personage: "
+        if (character.films.size == 1)
+            text_view_description_movie.text = "film dans lequel le personage à joué: "
+        else
+            text_view_description_movie.text = "films dans lequels le personage à joué: "
         text_view_character_name.text = character.name
         text_view_character_age.text = "Age: " + character.age
         text_view_eye_color.text = "Eyes color: " + character.eye_color
         text_view_hair_color.text = "Hair color: " + character.hair_color
-
-        val myItemClickListener = View.OnClickListener {
-            // we retrieve the row position from its tag
-            val position = it.tag as Int
-            val clickedItem = character.films[position]
-            val implicitIntent = Intent(Intent.ACTION_VIEW)
-            implicitIntent.data = Uri.parse( clickedItem)
-            startActivity(implicitIntent)
-        }
 
         recycler_view_character_movies.setHasFixedSize(true)
         recycler_view_character_movies.layoutManager = LinearLayoutManager(
                 activity,
                 LinearLayoutManager.VERTICAL,
                 false)
-        recycler_view_character_movies.adapter = CharacterMovieAdapter(context!!, character.films, myItemClickListener)
+        recycler_view_character_movies.adapter = CharacterMovieAdapter(context!!, character.films)
 
     }
 

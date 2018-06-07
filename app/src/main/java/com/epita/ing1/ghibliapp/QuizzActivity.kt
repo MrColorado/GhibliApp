@@ -30,6 +30,7 @@ data class PeopleQuizz(
         val url: String)
 */
 
+/*
 data class Movie(
         val id: String,
         val title: String,
@@ -38,7 +39,7 @@ data class Movie(
         val producer: String,
         val release_date: Int,
         val rt_score: Int)
-
+*/
 
 class QuizzActivity : AppCompatActivity() {
 
