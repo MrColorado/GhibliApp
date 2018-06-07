@@ -2,6 +2,7 @@ package com.epita.ing1.ghibliapp
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ class MovieListRecyclerAdapter (
         // the new RecyclerAdapter enforces the use of
         // the ViewHolder class performance pattern
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val movieTitleTextView: TextView = itemView.findViewById(R.id.movieTitle)
+        val movieTitleTextView: TextView = itemView.findViewById(R.id.moviesListItemTitleView)
     }
 
     override fun getItemCount(): Int {
@@ -28,16 +29,13 @@ class MovieListRecyclerAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : ViewHolder {
         // create the row (list item) from a layout inflater
-        val rowView : View
+        var layout = R.layout.activity_browse_films_item_list
         if (data.isEmpty()) {
-            rowView = LayoutInflater
-                    .from(parent.context)
-                    .inflate(R.layout.activity_browse_films_empty_list, parent, false)
-        } else {
-            rowView = LayoutInflater
-                    .from(parent.context)
-                    .inflate(R.layout.activity_browse_films_item_list, parent, false)
+            layout = R.layout.activity_browse_films_empty_list
         }
+        val rowView = LayoutInflater
+                .from(context)
+                .inflate(layout, parent, false)
 
         // create a ViewHolder using this row view
         // return this ViewHolder. The system will make sure view holders
