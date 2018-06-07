@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder
 // 3 Questions about species
 // 3 Questions about location
 
+/*
 data class PeopleQuizz(
         val id: String,
         val name: String,
@@ -27,16 +28,8 @@ data class PeopleQuizz(
         val films: MutableList<String>,
         val species: String,
         val url: String)
+*/
 
-data class QuizzItem(
-        val id: String,
-        val title: String,
-        val question: String,
-        val correct: Int,
-        val answer1: String,
-        val answer2: String,
-        val answer3: String
-)
 
 class QuizzActivity : AppCompatActivity() {
 
@@ -58,11 +51,10 @@ class QuizzActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quizz)
 
-        currentQuest = QuizzItem("Test", "QUIZZ test", "How's the daddy ?",
+        currentQuest = QuizzItem("QUIZZ test", "How's the daddy ?",
                 2, "Jojo", "Me", "Epita lambda student.")
         val txt1: TextView = findViewById(R.id.TitleText)
         val txt2: TextView = findViewById(R.id.QuestionText)
-        val txt3: TextView = findViewById(R.id.ScoreText)
         val an1: Button = findViewById(R.id.ButtonAn1)
         val an2: Button = findViewById(R.id.ButtonAn2)
         val an3: Button = findViewById(R.id.ButtonAn3)
@@ -76,47 +68,78 @@ class QuizzActivity : AppCompatActivity() {
         tabAn.add(next)
         tabLab.add(txt1)
         tabLab.add(txt2)
-        tabLab.add(txt3)
 
-        val dataPeople = arrayListOf<PeopleQuizz>()
-
-        val jsonConv = GsonConverterFactory.create(GsonBuilder().create())
-
+        // Get People, Vehicle, ;...
+        val sourcePeople: MutableList<Character> = mutableListOf()
+        val baseURL = "https://ghibliapi.herokuapp.com"
+        val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
         val retrofit = Retrofit.Builder()
-                .baseUrl("https://ghibliapi.herokuapp.com/people/")
-                .addConverterFactory(jsonConv)
+                .baseUrl(baseURL)
+                .addConverterFactory(jsonConverter)
                 .build()
+        val service: CharacterInterface = retrofit.create(CharacterInterface::class.java)
 
-        // val service = retrofit.create(PeopleQuizz::class.java)
+        val callback = object : Callback<List<Character>> {
+            override fun onFailure(call: Call<List<Character>>?, t: Throwable?) {}
 
-        val callback = object : Callback<List<PeopleQuizz>> {
-            override fun onFailure(call: Call<List<PeopleQuizz>>?, t: Throwable?) {
-                // Code here what happens if calling the WebService fails
-                //button.text = "FAIL1"
-            }
-
-            override fun onResponse(call: Call<List<PeopleQuizz>>?, response: Response<List<PeopleQuizz>>?) {
-                // Code here what happens when WebService responds
-                // button.text = "Fail2"
+            override fun onResponse(call: Call<List<Character>>?, response: Response<List<Character>>?) {
                 if (response != null) {
-                    // button.text = "Fail3"
                     if (response.code() == 200) {
                         val responseData = response.body()
                         if (responseData != null) {
-                            // data.addAll(responseData)
-                            // data.shuffle()
+                            sourcePeople.addAll(responseData)
+                            val copyPeople = sourcePeople
+                            sourcePeople.shuffle()
+                            for (i in 1..10) {
+                                val k = (i % 3) + 1
+                                var ann1 = ""
+                                var ann2 = ""
+                                var ann3 = ""
+                                copyPeople.shuffle()
+                                for (j in copyPeople) {
+                                    var cor = true
+                                    for (l in sourcePeople[i].films) {
+                                        for (c in j.films) {
+                                            if (l == c) {
+                                                cor = false
+                                            }
+                                        }
+                                    }
+                                    if (cor) {
+                                        if (ann1 == "") {
+                                            ann1 = j.films[0]
+                                        } else if (ann2 == "") {
+                                            ann2 = j.films[0]
+                                        } else if (ann3 == "") {
+                                            ann3 = j.films[0]
+                                        } else {
+                                            break
+                                        }
+                                    }
+                                }
+                                if (k == 1) {
+                                    ann1 = sourcePeople[i].films[0]
+                                } else if (k == 2) {
+                                    ann2 = sourcePeople[i].films[0]
+                                } else if (k == 3) {
+                                    ann3 = sourcePeople[i].films[0]
+                                }
+                                quests.add(QuizzItem(sourcePeople[i].name, "Which movie for this character ?",
+                                        k, ann1, ann2, ann3))
+                            }
+                            StartQuestions()
                         }
                     }
                 }
             }
         }
-
-        // start Game
-        StartQuestions()
+        service.listCharacter().enqueue(callback)
     }
 
     fun StartQuestions() {
         // Change Question
+        quests.shuffle()
+        currentQuest = quests[count - 1]
         // Update Question Labels
         this.tabLab[0].text = currentQuest!!.title
         this.tabLab[1].text = currentQuest!!.question
@@ -134,11 +157,11 @@ class QuizzActivity : AppCompatActivity() {
     fun nextQuestion(clickedView: View) {
         // Increm
         count++
+        currentQuest = quests[count - 1]
         // Change Question
         if (count > max) {
             this.tabLab[0].text = "Finish !"
-            this.tabLab[1].text = ""
-            this.tabLab[2].text = "Score :" + score + "/" + max
+            this.tabLab[1].text = "Score :" + score + "/" + max
             this.tabAn[0].visibility = View.INVISIBLE
             this.tabAn[1].visibility = View.INVISIBLE
             this.tabAn[2].visibility = View.INVISIBLE
