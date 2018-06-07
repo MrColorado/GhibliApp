@@ -3,6 +3,7 @@ package com.epita.ing1.ghibliapp
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_browse_films.*
@@ -30,9 +31,9 @@ class BrowseFilmsActivity : AppCompatActivity() {
 
         // Google removed ItemClickListener in RecyclerView so we have to do it ourselves
         val myItemClickListener = View.OnClickListener {
-            it ->
+            clickedView ->
             // we retrieve the row position from its tag
-            val position = it.tag as Int
+            val position = clickedView.tag as Int
             val clickedItem = data[position]
             // do stuff
             Toast.makeText(

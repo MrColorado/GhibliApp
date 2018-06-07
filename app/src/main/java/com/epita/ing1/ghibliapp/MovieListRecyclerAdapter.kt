@@ -39,9 +39,6 @@ class MovieListRecyclerAdapter (
                     .inflate(R.layout.activity_browse_films_item_list, parent, false)
         }
 
-        // add onclicklisterner to the newly created view
-        rowView.setOnClickListener(onItemClickListener)
-
         // create a ViewHolder using this row view
         // return this ViewHolder. The system will make sure view holders
         // are used and recycled
@@ -52,10 +49,15 @@ class MovieListRecyclerAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // retrieve the item at the specified position
         val currentItem = data[position]
+
         // put the data
         holder.movieTitleTextView.text = currentItem.title
+
         // We just put position in data to be able to retrieve information when
         // user clicks on it. (to load details about the movie and stuff)
         holder.movieTitleTextView.tag = position
+
+        // add onclicklisterner to the newly created view
+        holder.movieTitleTextView.setOnClickListener(onItemClickListener)
     }
 }
