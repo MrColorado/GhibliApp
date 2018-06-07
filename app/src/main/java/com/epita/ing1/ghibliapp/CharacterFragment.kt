@@ -43,8 +43,8 @@ class CharacterFragment : Fragment() {
             text_view_description_movie.text = "films dans lequels le personage à joué: "
         text_view_character_name.text = character.name
         text_view_character_age.text = "Age: " + character.age
-        text_view_eye_color.text = "Eyes color: " + character.eye_color
-        text_view_hair_color.text = "Hair color: " + character.hair_color
+        text_view_eye_color.text = "Couleur des yeux: " + character.eye_color
+        text_view_hair_color.text = "Couleur des cheveux: " + character.hair_color
 
         recycler_view_character_movies.setHasFixedSize(true)
         recycler_view_character_movies.layoutManager = LinearLayoutManager(
