@@ -185,6 +185,7 @@ class QuizzActivity : AppCompatActivity() {
     fun onClickAn1(clickedView: View) {
         this.tabLab[1].text = "Answer is :"
         if (this.currentQuest!!.correct == 1) {
+            this.tabLab[1].text = " Well done !!!"
             this.score += 1
             this.tabAn[1].visibility = View.INVISIBLE
             this.tabAn[2].visibility = View.INVISIBLE
@@ -201,6 +202,7 @@ class QuizzActivity : AppCompatActivity() {
     fun onClickAn2(clickedView: View) {
         this.tabLab[1].text = "Answer is :"
         if (this.currentQuest!!.correct == 2) {
+            this.tabLab[1].text = " Well done !!!"
             this.score += 1
             this.tabAn[0].visibility = View.INVISIBLE
             this.tabAn[2].visibility = View.INVISIBLE
@@ -217,6 +219,7 @@ class QuizzActivity : AppCompatActivity() {
     fun onClickAn3(clickedView: View) {
         this.tabLab[1].text = "Answer is :"
         if (this.currentQuest!!.correct == 3) {
+            this.tabLab[1].text = " Well done !!!"
             this.score += 1
             this.tabAn[0].visibility = View.INVISIBLE
             this.tabAn[1].visibility = View.INVISIBLE
