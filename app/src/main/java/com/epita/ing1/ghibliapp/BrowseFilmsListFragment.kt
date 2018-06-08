@@ -1,33 +1,38 @@
 package com.epita.ing1.ghibliapp
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.activity_browse_films.*
+import kotlinx.android.synthetic.main.fragment_browse_films_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * A simple [Fragment] subclass.
+ * Activities that contain this fragment must implement the
+ * [BrowseFilmsListFragment.OnFragmentInteractionListener] interface
+ * to handle interaction events.
+ * Use the [BrowseFilmsListFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ *
+ */
+class BrowseFilmsListFragment : Fragment(), View.OnClickListener {
 
-class BrowseFilmsActivity : AppCompatActivity(), View.OnClickListener {
+    private var data: ArrayList<Movie> = ArrayList()
 
-    var data: ArrayList<Movie> = ArrayList()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_browse_films)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // init ListView (basically optimizations and orientation)
         moviesList.setHasFixedSize(true)
         moviesList.layoutManager = LinearLayoutManager(
-                this,
+                activity,
                 LinearLayoutManager.VERTICAL,
                 false
         )
@@ -55,14 +60,19 @@ class BrowseFilmsActivity : AppCompatActivity(), View.OnClickListener {
                                         movie.release_date,
                                         movie.rt_score))
                             }
-                            moviesList.adapter = MovieListRecyclerAdapter(this@BrowseFilmsActivity, data, this@BrowseFilmsActivity)
+                            moviesList.adapter = MovieListRecyclerAdapter(context!!, data, this@BrowseFilmsListFragment)
                         }
                     }
                 }
             }
         }
         service.getFilms().enqueue(callback)
+    }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_browse_films_list, container, false)
     }
 
     // Google removed ItemClickListener in RecyclerView so we have to do it ourselves
@@ -70,21 +80,19 @@ class BrowseFilmsActivity : AppCompatActivity(), View.OnClickListener {
         // we retrieve the row position from its tag
         val position = clickedView!!.tag as Int
         val clickedItem = data[position]
-        // do stuff
-        Toast.makeText(
-                this,
-                "Clicked " + clickedItem.title,
-                Toast.LENGTH_SHORT)
-                .show()
-        val explicitIntent = Intent(
-                this@BrowseFilmsActivity,
-                FilmDetailsActivity::class.java
-        )
-        explicitIntent.putExtra("title", clickedItem.title)
-        explicitIntent.putExtra("year", clickedItem.release_date)
-        explicitIntent.putExtra("director", clickedItem.director)
-        explicitIntent.putExtra("description", clickedItem.description)
 
-        startActivity(explicitIntent)
+        val dataBundle = Bundle()
+        dataBundle.putString("title", clickedItem.title)
+        dataBundle.putInt("year", clickedItem.release_date)
+        dataBundle.putString("director", clickedItem.director)
+        dataBundle.putString("description", clickedItem.description)
+
+        val filmDetailsFragment = FilmDetailsFragment()
+        filmDetailsFragment.arguments = dataBundle
+
+        val fragmentTransaction = fragmentManager!!.beginTransaction()
+        fragmentTransaction.replace(R.id.main_container, filmDetailsFragment)
+
+        fragmentTransaction.commit()
     }
 }

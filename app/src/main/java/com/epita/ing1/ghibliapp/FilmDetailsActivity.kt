@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import kotlinx.android.synthetic.main.activity_film_details.*
 
 class FilmDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -29,7 +28,7 @@ class FilmDetailsActivity : AppCompatActivity(), View.OnClickListener {
         val titleAndYear = "%s (%d)"
                 .format(originIntent.getStringExtra("title"),
                         originIntent.getIntExtra("year", -1))
-
+/**
         film_details_movieTitle.text = titleAndYear
         film_details_movieDirector
                 .text = "%s %s".format(film_details_movieDirector.text,
@@ -41,5 +40,6 @@ class FilmDetailsActivity : AppCompatActivity(), View.OnClickListener {
         film_details_googleSearchButton.setOnClickListener(this@FilmDetailsActivity)
 
         film_details_iconView.setImageResource(R.drawable.movie_icon)
+        **/
     }
 }
