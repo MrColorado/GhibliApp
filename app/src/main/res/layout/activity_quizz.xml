@@ -23,7 +23,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif"
-                android:text="Welcome to the QUIZZ"
+                android:text="@string/welcome_to_the_quizz"
                 android:textAlignment="center"
                 android:textSize="32sp"
                 android:textStyle="bold" />
@@ -43,7 +43,7 @@
                 android:id="@+id/QuestionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Please wait... Downloading data..."
+                android:text="@string/please_wait_downloading_data"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
@@ -61,21 +61,18 @@
             <Button
                 android:id="@+id/ButtonAn1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reponse D" />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/ButtonAn2"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="La réponse D" />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/ButtonAn3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NON ! je veux la réponse D" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -89,7 +86,7 @@
                 android:id="@+id/NextQuestButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next Question ->" />
+                android:text="@string/next_question" />
 
             <TextView
                 android:id="@+id/QuestionsStatus"

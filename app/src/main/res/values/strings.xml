@@ -5,4 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_browse_films">BrowseFilms</string>
     <string name="list_is_empty">List is empty. :(</string>
+    <string name="welcome_to_the_quizz">Welcome to the QUIZZ</string>
+    <string name="please_wait_downloading_data">Please wait… Downloading data…</string>
+    <string name="next_question"><![CDATA[Next Question ->]]></string>
 </resources>
