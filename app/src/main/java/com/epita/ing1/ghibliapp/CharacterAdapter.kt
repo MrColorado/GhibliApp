@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 class CharacterAdapter(val context: Context,
-                       val data: MutableList<Character>,
+                       var data: MutableList<Character>,
                        private val onItemClickListener: View.OnClickListener) :
         RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
@@ -33,5 +33,10 @@ class CharacterAdapter(val context: Context,
         val currentItem = data[position]
         holder.nameTextView.text = currentItem.name
         holder.itemView.tag = position
+    }
+
+    fun filterList(filteredList: MutableList<Character>) {
+        this.data = filteredList
+        notifyDataSetChanged()
     }
 }

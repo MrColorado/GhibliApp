@@ -92,7 +92,7 @@
         android:layout_marginStart="8dp"
         android:autoText="false"
         android:gravity="center"
-        android:text="Venez décourvrir tout l'univers du studio Ghibli, ses films, ses personnage à travers cette application"
+        android:text="@string/venez_d_courvrir_tout_l_univers_du_studio_ghibli_ses_films_ses_personnages_travers_cette_application"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"

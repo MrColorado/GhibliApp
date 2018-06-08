@@ -8,4 +8,7 @@
     <string name="welcome_to_the_quizz">Welcome to the QUIZZ</string>
     <string name="please_wait_downloading_data">Please wait… Downloading data…</string>
     <string name="next_question"><![CDATA[Next Question ->]]></string>
+    <string name="find_a_movie_character">Find a movie character</string>
+    <string name="movie_details">Movie details</string>
+    <string name="venez_d_courvrir_tout_l_univers_du_studio_ghibli_ses_films_ses_personnages_travers_cette_application">Venez décourvrir tout l\'univers du studio Ghibli, ses films, ses personnages à travers cette application</string>
 </resources>

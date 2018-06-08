@@ -4,10 +4,11 @@ package com.epita.ing1.ghibliapp
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.character_recycler_view.*
 import retrofit2.Call
@@ -26,7 +27,10 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class CharacterListFragment : Fragment() {
+class CharacterListFragment : Fragment(), TextWatcher {
+
+    private val mdata = ArrayList<Character>()
+    private var adapter: CharacterAdapter? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +41,6 @@ class CharacterListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val mdata : MutableList<Character> = arrayListOf()
         val baseURL = "https://ghibliapi.herokuapp.com"
         val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
         val retrofit = Retrofit.Builder()
@@ -72,12 +75,38 @@ class CharacterListFragment : Fragment() {
                                     activity,
                                     LinearLayoutManager.VERTICAL,
                                     false)
-                            character_recycler.adapter = CharacterAdapter(context!!, mdata, myItemClickListener)
+                            adapter = CharacterAdapter(context!!, mdata, myItemClickListener)
+                            character_recycler.adapter = adapter
                         }
                     }
                 }
             }
         }
         service.listCharacter().enqueue(callback)
+        character_recycler_searchView.addTextChangedListener(this)
+    }
+
+    /**
+     * SEARCH BAR FILTER TEXT CHAMGES WATCHER
+     */
+    override fun afterTextChanged(s: Editable?) {
+        filter(s.toString())
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+    }
+
+    private fun filter(text: String) {
+        val filteredItems = ArrayList<Character>()
+
+        for (character in mdata) {
+            if (character.name.toLowerCase().contains(text.toLowerCase())) {
+                filteredItems.add(character)
+            }
+        }
+        adapter!!.filterList(filteredItems)
     }
 }
