@@ -10,6 +10,25 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/DisplayQuestionQuizzLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/QuestionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/please_wait_downloading_data"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/QuizzTitleDisplayLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,27 +44,8 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/welcome_to_the_quizz"
                 android:textAlignment="center"
-                android:textSize="32sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/DisplayQuestionQuizzLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp">
-
-            <TextView
-                android:id="@+id/QuestionText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/please_wait_downloading_data"
-                android:textAlignment="center"
-                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -60,18 +60,17 @@
 
             <Button
                 android:id="@+id/ButtonAn1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/ButtonAn2"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/ButtonAn3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -83,8 +82,9 @@
             android:gravity="center_vertical|center_horizontal">
 
             <Button
+                android:layout_marginTop="8dp"
                 android:id="@+id/NextQuestButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/next_question" />
 

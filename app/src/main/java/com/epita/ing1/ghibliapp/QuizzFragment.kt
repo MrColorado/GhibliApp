@@ -45,8 +45,8 @@ class QuizzFragment : Fragment() {
             count++
             // Change Question
             if (count > max) {
-                this.tabLab[0].text = "Finish !"
-                this.tabLab[1].text = "Final Score: $score/$max"
+                this.tabLab[1].text = "C'est Fini ! Super !"
+                this.tabLab[0].text = "Score Final: $score/$max"
                 this.tabLab[2].text = ""
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[1].visibility = View.INVISIBLE
@@ -72,9 +72,9 @@ class QuizzFragment : Fragment() {
         }
 
         ButtonAn1.setOnClickListener {
-            this.tabLab[1].text = "Answer is:"
+            this.tabLab[1].text = "La bonne réponse était :"
             if (this.currentQuest!!.correct == 1) {
-                this.tabLab[1].text = " Well done !!!"
+                this.tabLab[1].text = "Bien joué !!!"
                 this.score += 1
                 this.tabAn[1].visibility = View.INVISIBLE
                 this.tabAn[2].visibility = View.INVISIBLE
@@ -89,9 +89,9 @@ class QuizzFragment : Fragment() {
         }
 
         ButtonAn2.setOnClickListener {
-            this.tabLab[1].text = "Answer is :"
+            this.tabLab[1].text = "La bonne réponse était :"
             if (this.currentQuest!!.correct == 2) {
-                this.tabLab[1].text = " Well done !!!"
+                this.tabLab[1].text = "Bien joué !!!"
                 this.score += 1
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[2].visibility = View.INVISIBLE
@@ -106,9 +106,9 @@ class QuizzFragment : Fragment() {
         }
 
         ButtonAn3.setOnClickListener {
-            this.tabLab[1].text = "Answer is :"
+            this.tabLab[1].text = "La bonne réponse était :"
             if (this.currentQuest!!.correct == 3) {
-                this.tabLab[1].text = " Well done !!!"
+                this.tabLab[1].text = "Bien joué !!!"
                 this.score += 1
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[1].visibility = View.INVISIBLE
@@ -231,7 +231,7 @@ class QuizzFragment : Fragment() {
                                     ann1 = sourcePeople[i].films[0]
                                 } else if (k == 2) {
                                     ann2 = sourcePeople[i].films[0]
-                                } else if (k == 3) {
+                                } else {
                                     ann3 = sourcePeople[i].films[0]
                                 }
                                 ann1 = ann1.substring(38, ann1.length)
@@ -260,7 +260,6 @@ class QuizzFragment : Fragment() {
     fun StartQuestions() {
         // Change Question
         movie_c = 0
-        quests.shuffle()
         currentQuest = quests[count - 1]
         // Update Question Labels
         this.tabLab[0].text = currentQuest!!.title
