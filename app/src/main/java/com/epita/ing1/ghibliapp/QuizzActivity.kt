@@ -29,7 +29,7 @@ data class PeopleQuizz(
         val url: String)
 */
 
-data class Movie(
+data class MovieQuizz(
         val id: String,
         val title: String,
         val description: String,
@@ -47,6 +47,8 @@ class QuizzActivity : AppCompatActivity() {
     var max: Int = 10
     var quests: MutableList<QuizzItem> = mutableListOf()
     var movies_str: MutableList<String> = mutableListOf()
+    var movie_i = 0
+    var movie_c = 0
     var currentQuest: QuizzItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,15 +83,25 @@ class QuizzActivity : AppCompatActivity() {
                 .build()
         val service: CharacterInterface = retrofit.create(CharacterInterface::class.java)
 
-        val callbackMovie = object : Callback<Movie> {
-            override fun onFailure(call: Call<Movie>?, t: Throwable?) {}
+        val callbackMovie = object : Callback<MovieQuizz> {
+            override fun onFailure(call: Call<MovieQuizz>?, t: Throwable?) {
+                movie_i += 1
+                movies_str.add("Fatal Server Error")
+                if (movie_i == 30) {
+                    StartQuestions()
+                }
+            }
 
-            override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
+            override fun onResponse(call: Call<MovieQuizz>?, response: Response<MovieQuizz>?) {
                 if (response != null) {
                     if (response.code() == 200) {
                         val responseData = response.body()
                         if (responseData != null) {
-
+                            movies_str.add(responseData.title)
+                            movie_i += 1
+                            if (movie_i == 30) {
+                                StartQuestions()
+                            }
                         }
                     }
                 }
@@ -120,6 +132,15 @@ class QuizzActivity : AppCompatActivity() {
                                             if (l == c) {
                                                 cor = false
                                             }
+                                            if (ann1 == c) {
+                                                cor = false
+                                            }
+                                            if (ann2 == c) {
+                                                cor = false
+                                            }
+                                            if (ann3 == c) {
+                                                cor = false
+                                            }
                                         }
                                     }
                                     if (cor) {
@@ -141,10 +162,16 @@ class QuizzActivity : AppCompatActivity() {
                                 } else if (k == 3) {
                                     ann3 = sourcePeople[i].films[0]
                                 }
+                                ann1 = ann1.substring(38, ann1.length)
+                                ann2 = ann2.substring(38, ann2.length)
+                                ann3 = ann3.substring(38, ann3.length)
+                                val serviceM1: WSInterface = retrofit.create(WSInterface::class.java)
+                                serviceM1.getFilmById(ann1).enqueue(callbackMovie)
+                                serviceM1.getFilmById(ann2).enqueue(callbackMovie)
+                                serviceM1.getFilmById(ann3).enqueue(callbackMovie)
                                 quests.add(QuizzItem(sourcePeople[i].name, "Which movie for this character ?",
                                         k, ann1, ann2, ann3))
                             }
-                            StartQuestions()
                         }
                     }
                 }
@@ -161,9 +188,10 @@ class QuizzActivity : AppCompatActivity() {
         this.tabLab[0].text = currentQuest!!.title
         this.tabLab[1].text = currentQuest!!.question
         // Update Buttons values
-        this.tabAn[0].text = currentQuest!!.answer1
-        this.tabAn[1].text = currentQuest!!.answer2
-        this.tabAn[2].text = currentQuest!!.answer3
+        this.tabAn[0].text = movies_str[movie_c]
+        this.tabAn[1].text = movies_str[movie_c + 1]
+        this.tabAn[2].text = movies_str[movie_c + 2]
+        movie_c += 3
         // Buttons Show
         this.tabAn[0].visibility = View.VISIBLE
         this.tabAn[1].visibility = View.VISIBLE
@@ -188,9 +216,10 @@ class QuizzActivity : AppCompatActivity() {
             this.tabLab[0].text = currentQuest!!.title
             this.tabLab[1].text = currentQuest!!.question
             // Update Buttons values
-            this.tabAn[0].text = currentQuest!!.answer1
-            this.tabAn[1].text = currentQuest!!.answer2
-            this.tabAn[2].text = currentQuest!!.answer3
+            this.tabAn[0].text = movies_str[movie_c]
+            this.tabAn[1].text = movies_str[movie_c + 1]
+            this.tabAn[2].text = movies_str[movie_c + 2]
+            movie_c += 3
             // Buttons Show
             this.tabAn[0].visibility = View.VISIBLE
             this.tabAn[1].visibility = View.VISIBLE
