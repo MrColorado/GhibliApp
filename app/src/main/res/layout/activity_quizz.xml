@@ -13,19 +13,21 @@
             android:id="@+id/QuizzTitleDisplayLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif"
                 android:text="Welcome to the QUIZZ"
                 android:textAlignment="center"
                 android:textSize="32sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"/>
+                android:textStyle="bold" />
+
 
         </LinearLayout>
 
@@ -35,7 +37,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="vertical"
-            android:layout_marginBottom="25dp">
+            android:layout_marginBottom="20dp">
 
             <TextView
                 android:id="@+id/QuestionText"
@@ -44,6 +46,7 @@
                 android:text="Please wait... Downloading data..."
                 android:textAlignment="center"
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 
@@ -59,7 +62,6 @@
                 android:id="@+id/ButtonAn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onClickAn1"
                 android:text="Reponse D" />
 
             <Button
@@ -67,12 +69,10 @@
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onClickAn2"
                 android:text="La réponse D" />
 
             <Button
                 android:id="@+id/ButtonAn3"
-                android:onClick="onClickAn3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NON ! je veux la réponse D" />
@@ -82,14 +82,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:gravity="center_vertical|center_horizontal">
 
             <Button
                 android:id="@+id/NextQuestButton"
-                android:onClick="nextQuestion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Next Question ->" />
+
+            <TextView
+                android:id="@+id/QuestionsStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center" />
 
         </LinearLayout>
 

@@ -26,7 +26,8 @@ class QuizzFragment : Fragment() {
     var count: Int = 1
     var max: Int = 10
     var quests: MutableList<QuizzItem> = mutableListOf()
-    var movies_str: MutableList<String> = mutableListOf()
+    var movies_urls: Array<String> = Array(30) {_ -> ""}
+    var movies_str: Array<String> = Array(30) {_ -> ""}
     var movie_i = 0
     var movie_c = 0
     var currentQuest: QuizzItem? = null
@@ -46,6 +47,7 @@ class QuizzFragment : Fragment() {
             if (count > max) {
                 this.tabLab[0].text = "Finish !"
                 this.tabLab[1].text = "Final Score: " + score + "/" + max
+                this.tabLab[2].text = ""
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[1].visibility = View.INVISIBLE
                 this.tabAn[2].visibility = View.INVISIBLE
@@ -55,6 +57,7 @@ class QuizzFragment : Fragment() {
                 // Question Labels
                 this.tabLab[0].text = currentQuest!!.title
                 this.tabLab[1].text = currentQuest!!.question
+                this.tabLab[2].text = "$count/$max"
                 // Update Buttons values
                 this.tabAn[0].text = movies_str[movie_c]
                 this.tabAn[1].text = movies_str[movie_c + 1]
@@ -122,6 +125,7 @@ class QuizzFragment : Fragment() {
                 2, "Jojo", "Me", "Epita lambda student.")
         val txt1: TextView = getView()!!.findViewById(R.id.TitleText)
         val txt2: TextView = getView()!!.findViewById(R.id.QuestionText)
+        val txt3: TextView = getView()!!.findViewById(R.id.QuestionsStatus)
         val an1: Button = getView()!!.findViewById(R.id.ButtonAn1)
         val an2: Button = getView()!!.findViewById(R.id.ButtonAn2)
         val an3: Button = getView()!!.findViewById(R.id.ButtonAn3)
@@ -136,7 +140,7 @@ class QuizzFragment : Fragment() {
         tabAn.add(next)
         tabLab.add(txt1)
         tabLab.add(txt2)
-
+        tabLab.add(txt3)
         // Get People, Vehicle, ;...
         val sourcePeople: MutableList<Character> = mutableListOf()
         val baseURL = "https://ghibliapi.herokuapp.com"
@@ -150,7 +154,6 @@ class QuizzFragment : Fragment() {
         val callbackMovie = object : Callback<MovieQuizz> {
             override fun onFailure(call: Call<MovieQuizz>?, t: Throwable?) {
                 movie_i += 1
-                movies_str.add("Fatal Server Error")
                 if (movie_i == 30) {
                     StartQuestions()
                 }
@@ -161,7 +164,15 @@ class QuizzFragment : Fragment() {
                     if (response.code() == 200) {
                         val responseData = response.body()
                         if (responseData != null) {
-                            movies_str.add(responseData.title)
+                            var index = 0
+                            for (k in movies_urls) {
+                                if (k == responseData.id) {
+                                    movies_urls[index] = ""
+                                    break
+                                }
+                                index += 1
+                            }
+                            movies_str[index] = responseData.title
                             movie_i += 1
                             if (movie_i == 30) {
                                 StartQuestions()
@@ -210,6 +221,7 @@ class QuizzFragment : Fragment() {
                                             ann2 = j.films[0]
                                         } else if (ann3 == "") {
                                             ann3 = j.films[0]
+                                            break
                                         } else {
                                             break
                                         }
@@ -225,6 +237,10 @@ class QuizzFragment : Fragment() {
                                 ann1 = ann1.substring(38, ann1.length)
                                 ann2 = ann2.substring(38, ann2.length)
                                 ann3 = ann3.substring(38, ann3.length)
+                                movies_urls[movie_c] = ann1
+                                movies_urls[movie_c + 1] = ann2
+                                movies_urls[movie_c + 2] = ann3
+                                movie_c += 3
                                 val serviceM1: WSInterface = retrofit.create(WSInterface::class.java)
                                 serviceM1.getFilmById(ann1).enqueue(callbackMovie)
                                 serviceM1.getFilmById(ann2).enqueue(callbackMovie)
@@ -240,13 +256,16 @@ class QuizzFragment : Fragment() {
         service.listCharacter().enqueue(callback)
     }
 
+    @SuppressLint("SetTextI18n")
     fun StartQuestions() {
         // Change Question
+        movie_c = 0
         quests.shuffle()
         currentQuest = quests[count - 1]
         // Update Question Labels
         this.tabLab[0].text = currentQuest!!.title
         this.tabLab[1].text = currentQuest!!.question
+        this.tabLab[2].text = "$count/$max"
         // Update Buttons values
         this.tabAn[0].text = movies_str[movie_c]
         this.tabAn[1].text = movies_str[movie_c + 1]
