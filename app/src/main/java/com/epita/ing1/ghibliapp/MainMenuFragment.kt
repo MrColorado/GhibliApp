@@ -37,7 +37,7 @@ class MainMenuFragment : Fragment() {
 
         movie_button.setOnClickListener{
             val fragmentTransaction = fragmentManager!!.beginTransaction()
-            fragmentTransaction.replace(R.id.main_container, BrowseFilmsListFragment())
+            fragmentTransaction.replace(R.id.main_container, BrowseFilmsListFragment()).addToBackStack("MoviesList")
             fragmentTransaction.commit()
 
         }

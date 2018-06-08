@@ -38,13 +38,13 @@ class CharacterFragment : Fragment() {
         if (character.gender == "Female")
             image_view_gender.setImageResource(R.drawable.female)
         if (character.films.size == 1)
-            text_view_description_movie.text = "film dans lequel le personage à joué: "
+            text_view_description_movie.text = "Movie in which this character can be seen: "
         else
-            text_view_description_movie.text = "films dans lequels le personage à joué: "
+            text_view_description_movie.text = "Movies in which this character can be seen: "
         text_view_character_name.text = character.name
         text_view_character_age.text = "Age: " + character.age
-        text_view_eye_color.text = "Couleur des yeux: " + character.eye_color
-        text_view_hair_color.text = "Couleur des cheveux: " + character.hair_color
+        text_view_eye_color.text = "Eyes color: " + character.eye_color
+        text_view_hair_color.text = "Hair color: " + character.hair_color
 
         recycler_view_character_movies.setHasFixedSize(true)
         recycler_view_character_movies.layoutManager = LinearLayoutManager(

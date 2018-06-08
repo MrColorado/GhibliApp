@@ -98,7 +98,7 @@ class BrowseFilmsListFragment : Fragment(), View.OnClickListener, TextWatcher {
         filmDetailsFragment.arguments = dataBundle
 
         val fragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction.replace(R.id.main_container, filmDetailsFragment)
+        fragmentTransaction.replace(R.id.main_container, filmDetailsFragment).addToBackStack("Movie")
 
         fragmentTransaction.commit()
     }
