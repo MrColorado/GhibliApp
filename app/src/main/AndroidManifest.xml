@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuizzActivity" />
+        <activity android:name=".QuizzFragment" />
         <activity android:name=".BrowseFilmsActivity"/>
         <activity android:name=".FilmDetailsActivity"/>
         <activity android:name=".MainActivity">

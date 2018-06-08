@@ -41,6 +41,12 @@ class MainMenuFragment : Fragment() {
             fragmentTransaction.commit()
 
         }
+
+        quizz_button.setOnClickListener {
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+            fragmentTransaction.replace(R.id.main_container, QuizzFragment()).addToBackStack("QuizzFragment")
+            fragmentTransaction.commit()
+        }
     }
 
 }

@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/QuizzViewActivity"
-    tools:context=".QuizzActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/QuizzTitleDisplayLayout"
@@ -25,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:text="QUIZZ"
+                android:text="Welcome to the QUIZZ"
                 android:textAlignment="center"
                 android:textSize="32sp"
                 android:textStyle="bold"
@@ -46,7 +41,7 @@
                 android:id="@+id/QuestionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="QUESTION STUFF ????"
+                android:text="Please wait... Downloading data..."
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
@@ -94,7 +89,7 @@
                 android:onClick="nextQuestion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NEXT QUESTION" />
+                android:text="Next Question ->" />
 
         </LinearLayout>
 

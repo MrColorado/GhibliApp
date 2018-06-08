@@ -1,44 +1,24 @@
 package com.epita.ing1.ghibliapp
 
+import android.annotation.SuppressLint
+import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.activity_quizz.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-// 4 Questions People
-// 3 Questions about species
-// 3 Questions about location
-
-/*
-data class PeopleQuizz(
-        val id: String,
-        val name: String,
-        val gender: String,
-        val age: String,
-        val eye_color: String,
-        val hair_color: String,
-        val films: MutableList<String>,
-        val species: String,
-        val url: String)
-*/
-
-data class MovieQuizz(
-        val id: String,
-        val title: String,
-        val description: String,
-        val director: String,
-        val producer: String,
-        val release_date: Int,
-        val rt_score: Int)
-
-class QuizzActivity : AppCompatActivity() {
+class QuizzFragment : Fragment() {
 
     var tabAn: MutableList<Button> = mutableListOf()
     var tabLab: MutableList<TextView> = mutableListOf()
@@ -51,21 +31,105 @@ class QuizzActivity : AppCompatActivity() {
     var movie_c = 0
     var currentQuest: QuizzItem? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_quizz)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.activity_quizz, container, false)
+    }
 
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        NextQuestButton.setOnClickListener {
+            // Increm
+            count++
+            // Change Question
+            if (count > max) {
+                this.tabLab[0].text = "Finish !"
+                this.tabLab[1].text = "Final Score: " + score + "/" + max
+                this.tabAn[0].visibility = View.INVISIBLE
+                this.tabAn[1].visibility = View.INVISIBLE
+                this.tabAn[2].visibility = View.INVISIBLE
+                this.tabAn[3].visibility = View.INVISIBLE
+            } else {
+                currentQuest = quests[count - 1]
+                // Question Labels
+                this.tabLab[0].text = currentQuest!!.title
+                this.tabLab[1].text = currentQuest!!.question
+                // Update Buttons values
+                this.tabAn[0].text = movies_str[movie_c]
+                this.tabAn[1].text = movies_str[movie_c + 1]
+                this.tabAn[2].text = movies_str[movie_c + 2]
+                movie_c += 3
+                // Buttons Show
+                this.tabAn[0].visibility = View.VISIBLE
+                this.tabAn[1].visibility = View.VISIBLE
+                this.tabAn[2].visibility = View.VISIBLE
+                this.tabAn[3].visibility = View.INVISIBLE
+            }
+        }
+
+        ButtonAn1.setOnClickListener {
+            this.tabLab[1].text = "Answer is:"
+            if (this.currentQuest!!.correct == 1) {
+                this.tabLab[1].text = " Well done !!!"
+                this.score += 1
+                this.tabAn[1].visibility = View.INVISIBLE
+                this.tabAn[2].visibility = View.INVISIBLE
+            } else if (this.currentQuest!!.correct == 2) {
+                this.tabAn[2].visibility = View.INVISIBLE
+                this.tabAn[0].visibility = View.INVISIBLE
+            } else {
+                this.tabAn[0].visibility = View.INVISIBLE
+                this.tabAn[1].visibility = View.INVISIBLE
+            }
+            this.tabAn[3].visibility = View.VISIBLE
+        }
+
+        ButtonAn2.setOnClickListener {
+            this.tabLab[1].text = "Answer is :"
+            if (this.currentQuest!!.correct == 2) {
+                this.tabLab[1].text = " Well done !!!"
+                this.score += 1
+                this.tabAn[0].visibility = View.INVISIBLE
+                this.tabAn[2].visibility = View.INVISIBLE
+            } else if (this.currentQuest!!.correct == 1) {
+                this.tabAn[1].visibility = View.INVISIBLE
+                this.tabAn[2].visibility = View.INVISIBLE
+            } else {
+                this.tabAn[1].visibility = View.INVISIBLE
+                this.tabAn[0].visibility = View.INVISIBLE
+            }
+            this.tabAn[3].visibility = View.VISIBLE
+        }
+
+        ButtonAn3.setOnClickListener {
+            this.tabLab[1].text = "Answer is :"
+            if (this.currentQuest!!.correct == 3) {
+                this.tabLab[1].text = " Well done !!!"
+                this.score += 1
+                this.tabAn[0].visibility = View.INVISIBLE
+                this.tabAn[1].visibility = View.INVISIBLE
+            } else if (this.currentQuest!!.correct == 1) {
+                this.tabAn[1].visibility = View.INVISIBLE
+                this.tabAn[2].visibility = View.INVISIBLE
+            } else {
+                this.tabAn[0].visibility = View.INVISIBLE
+                this.tabAn[2].visibility = View.INVISIBLE
+            }
+            this.tabAn[3].visibility = View.VISIBLE
+        }
         currentQuest = QuizzItem("QUIZZ test", "How's the daddy ?",
                 2, "Jojo", "Me", "Epita lambda student.")
-        val txt1: TextView = findViewById(R.id.TitleText)
-        val txt2: TextView = findViewById(R.id.QuestionText)
-        val an1: Button = findViewById(R.id.ButtonAn1)
-        val an2: Button = findViewById(R.id.ButtonAn2)
-        val an3: Button = findViewById(R.id.ButtonAn3)
-        val next: Button = findViewById(R.id.NextQuestButton)
-        an1.setVisibility(View.VISIBLE)
-        an2.setVisibility(View.VISIBLE)
-        an3.setVisibility(View.VISIBLE)
+        val txt1: TextView = getView()!!.findViewById(R.id.TitleText)
+        val txt2: TextView = getView()!!.findViewById(R.id.QuestionText)
+        val an1: Button = getView()!!.findViewById(R.id.ButtonAn1)
+        val an2: Button = getView()!!.findViewById(R.id.ButtonAn2)
+        val an3: Button = getView()!!.findViewById(R.id.ButtonAn3)
+        val next: Button = getView()!!.findViewById(R.id.NextQuestButton)
+        an1.visibility = View.INVISIBLE
+        an2.visibility = View.INVISIBLE
+        an3.visibility = View.INVISIBLE
+        next.visibility = View.INVISIBLE
         tabAn.add(an1)
         tabAn.add(an2)
         tabAn.add(an3)
@@ -110,7 +174,6 @@ class QuizzActivity : AppCompatActivity() {
 
         val callback = object : Callback<List<Character>> {
             override fun onFailure(call: Call<List<Character>>?, t: Throwable?) {}
-
             override fun onResponse(call: Call<List<Character>>?, response: Response<List<Character>>?) {
                 if (response != null) {
                     if (response.code() == 200) {
@@ -131,14 +194,11 @@ class QuizzActivity : AppCompatActivity() {
                                         for (c in j.films) {
                                             if (l == c) {
                                                 cor = false
-                                            }
-                                            if (ann1 == c) {
+                                            } else if (ann1 == c) {
                                                 cor = false
-                                            }
-                                            if (ann2 == c) {
+                                            } else if (ann2 == c) {
                                                 cor = false
-                                            }
-                                            if (ann3 == c) {
+                                            } else if (ann3 == c) {
                                                 cor = false
                                             }
                                         }
@@ -197,89 +257,5 @@ class QuizzActivity : AppCompatActivity() {
         this.tabAn[1].visibility = View.VISIBLE
         this.tabAn[2].visibility = View.VISIBLE
         this.tabAn[3].visibility = View.INVISIBLE
-    }
-
-    fun nextQuestion(clickedView: View) {
-        // Increm
-        count++
-        currentQuest = quests[count - 1]
-        // Change Question
-        if (count > max) {
-            this.tabLab[0].text = "Finish !"
-            this.tabLab[1].text = "Score :" + score + "/" + max
-            this.tabAn[0].visibility = View.INVISIBLE
-            this.tabAn[1].visibility = View.INVISIBLE
-            this.tabAn[2].visibility = View.INVISIBLE
-            this.tabAn[3].visibility = View.INVISIBLE
-        } else {
-            // Update Question Labels
-            this.tabLab[0].text = currentQuest!!.title
-            this.tabLab[1].text = currentQuest!!.question
-            // Update Buttons values
-            this.tabAn[0].text = movies_str[movie_c]
-            this.tabAn[1].text = movies_str[movie_c + 1]
-            this.tabAn[2].text = movies_str[movie_c + 2]
-            movie_c += 3
-            // Buttons Show
-            this.tabAn[0].visibility = View.VISIBLE
-            this.tabAn[1].visibility = View.VISIBLE
-            this.tabAn[2].visibility = View.VISIBLE
-            this.tabAn[3].visibility = View.INVISIBLE
-        }
-    }
-
-    fun onClickAn1(clickedView: View) {
-        this.tabLab[1].text = "Answer is :"
-        if (this.currentQuest!!.correct == 1) {
-            this.tabLab[1].text = " Well done !!!"
-            this.score += 1
-            this.tabAn[1].visibility = View.INVISIBLE
-            this.tabAn[2].visibility = View.INVISIBLE
-        } else if (this.currentQuest!!.correct == 2) {
-            this.tabAn[2].visibility = View.INVISIBLE
-            this.tabAn[0].visibility = View.INVISIBLE
-        } else {
-            this.tabAn[0].visibility = View.INVISIBLE
-            this.tabAn[1].visibility = View.INVISIBLE
-        }
-        this.tabAn[3].visibility = View.VISIBLE
-    }
-
-    fun onClickAn2(clickedView: View) {
-        this.tabLab[1].text = "Answer is :"
-        if (this.currentQuest!!.correct == 2) {
-            this.tabLab[1].text = " Well done !!!"
-            this.score += 1
-            this.tabAn[0].visibility = View.INVISIBLE
-            this.tabAn[2].visibility = View.INVISIBLE
-        } else if (this.currentQuest!!.correct == 1) {
-            this.tabAn[1].visibility = View.INVISIBLE
-            this.tabAn[2].visibility = View.INVISIBLE
-        } else {
-            this.tabAn[1].visibility = View.INVISIBLE
-            this.tabAn[0].visibility = View.INVISIBLE
-        }
-        this.tabAn[3].visibility = View.VISIBLE
-    }
-
-    fun onClickAn3(clickedView: View) {
-        this.tabLab[1].text = "Answer is :"
-        if (this.currentQuest!!.correct == 3) {
-            this.tabLab[1].text = " Well done !!!"
-            this.score += 1
-            this.tabAn[0].visibility = View.INVISIBLE
-            this.tabAn[1].visibility = View.INVISIBLE
-        } else if (this.currentQuest!!.correct == 1) {
-            this.tabAn[1].visibility = View.INVISIBLE
-            this.tabAn[2].visibility = View.INVISIBLE
-        } else {
-            this.tabAn[0].visibility = View.INVISIBLE
-            this.tabAn[2].visibility = View.INVISIBLE
-        }
-        this.tabAn[3].visibility = View.VISIBLE
-    }
-
-    fun fillQuizz(clickedView: View) {
-
     }
 }
