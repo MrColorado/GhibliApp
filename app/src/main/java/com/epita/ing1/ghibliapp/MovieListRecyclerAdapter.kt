@@ -2,16 +2,14 @@ package com.epita.ing1.ghibliapp
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import java.util.zip.Inflater
 
 class MovieListRecyclerAdapter (
         private val context: Context,
-        val data: MutableList<Movie>,
+        var data: MutableList<Movie>,
         private val onItemClickListener: View.OnClickListener) :
         RecyclerView.Adapter<MovieListRecyclerAdapter.ViewHolder>() {
 
@@ -57,5 +55,13 @@ class MovieListRecyclerAdapter (
 
         // add onclicklisterner to the newly created view
         holder.movieTitleTextView.setOnClickListener(onItemClickListener)
+    }
+
+    //This method will filter the list
+    //here we are passing the filtered data
+    //and assigning it to the list with notifydatasetchanged method
+    fun filterList(filteredItems: ArrayList<Movie>) {
+        this.data = filteredItems
+        notifyDataSetChanged()
     }
 }

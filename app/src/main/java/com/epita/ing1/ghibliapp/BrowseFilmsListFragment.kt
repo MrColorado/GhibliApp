@@ -3,6 +3,8 @@ package com.epita.ing1.ghibliapp
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,9 +26,10 @@ import retrofit2.converter.gson.GsonConverterFactory
  * create an instance of this fragment.
  *
  */
-class BrowseFilmsListFragment : Fragment(), View.OnClickListener {
+class BrowseFilmsListFragment : Fragment(), View.OnClickListener, TextWatcher {
 
     private var data: ArrayList<Movie> = ArrayList()
+    private var adapter: MovieListRecyclerAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // init ListView (basically optimizations and orientation)
@@ -60,13 +63,17 @@ class BrowseFilmsListFragment : Fragment(), View.OnClickListener {
                                         movie.release_date,
                                         movie.rt_score))
                             }
-                            moviesList.adapter = MovieListRecyclerAdapter(context!!, data, this@BrowseFilmsListFragment)
+                            adapter = MovieListRecyclerAdapter(context!!, data, this@BrowseFilmsListFragment)
+                            moviesList.adapter = adapter
                         }
                     }
                 }
             }
         }
         service.getFilms().enqueue(callback)
+
+        // Search Bar
+        browse_films_fragment_search_bar.addTextChangedListener(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -94,5 +101,36 @@ class BrowseFilmsListFragment : Fragment(), View.OnClickListener {
         fragmentTransaction.replace(R.id.main_container, filmDetailsFragment)
 
         fragmentTransaction.commit()
+    }
+
+    /**
+     * Search Bar textChangedListener
+     */
+    override fun afterTextChanged(editable: Editable?) {
+        filter(editable.toString())
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        // do nothing
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        // do nothing
+    }
+
+    private fun filter(text: String) {
+        //new array list that will hold the filtered data
+        val filteredMovies = ArrayList<Movie>()
+
+        //looping through existing elements
+        for (movie in data) {
+            //if the existing elements contains the search input
+            if (movie.title.toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filteredMovies.add(movie)
+            }
+        }
+        //calling a method of the adapter class and passing the filtered list
+        this.adapter!!.filterList(filteredMovies)
     }
 }
