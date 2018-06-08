@@ -46,7 +46,7 @@ class QuizzFragment : Fragment() {
             // Change Question
             if (count > max) {
                 this.tabLab[0].text = "Finish !"
-                this.tabLab[1].text = "Final Score: " + score + "/" + max
+                this.tabLab[1].text = "Final Score: $score/$max"
                 this.tabLab[2].text = ""
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[1].visibility = View.INVISIBLE
@@ -245,7 +245,7 @@ class QuizzFragment : Fragment() {
                                 serviceM1.getFilmById(ann1).enqueue(callbackMovie)
                                 serviceM1.getFilmById(ann2).enqueue(callbackMovie)
                                 serviceM1.getFilmById(ann3).enqueue(callbackMovie)
-                                quests.add(QuizzItem(sourcePeople[i].name, "Which movie for this character ?",
+                                quests.add(QuizzItem(sourcePeople[i].name, "A quel film appartient ce personnage ?",
                                         k, ann1, ann2, ann3))
                             }
                         }
