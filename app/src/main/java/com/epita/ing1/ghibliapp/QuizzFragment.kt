@@ -1,6 +1,7 @@
 package com.epita.ing1.ghibliapp
 
 import android.annotation.SuppressLint
+import android.graphics.PorterDuff
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -64,6 +65,9 @@ class QuizzFragment : Fragment() {
                 this.tabAn[2].text = movies_str[movie_c + 2]
                 movie_c += 3
                 // Buttons Show
+                this.tabAn[0].getBackground().setColorFilter(0xFFCCCCCC.toInt(), PorterDuff.Mode.MULTIPLY)
+                this.tabAn[1].getBackground().setColorFilter(0xFFCCCCCC.toInt(), PorterDuff.Mode.MULTIPLY)
+                this.tabAn[2].getBackground().setColorFilter(0xFFCCCCCC.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[0].visibility = View.VISIBLE
                 this.tabAn[1].visibility = View.VISIBLE
                 this.tabAn[2].visibility = View.VISIBLE
@@ -76,12 +80,15 @@ class QuizzFragment : Fragment() {
             if (this.currentQuest!!.correct == 1) {
                 this.tabLab[1].text = "Bien joué !!!"
                 this.score += 1
+                this.tabAn[0].getBackground().setColorFilter(0xFF00FF00.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[1].visibility = View.INVISIBLE
                 this.tabAn[2].visibility = View.INVISIBLE
             } else if (this.currentQuest!!.correct == 2) {
+                this.tabAn[1].getBackground().setColorFilter(0xFFFF0000.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[2].visibility = View.INVISIBLE
                 this.tabAn[0].visibility = View.INVISIBLE
             } else {
+                this.tabAn[2].getBackground().setColorFilter(0xFFFF0000.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[1].visibility = View.INVISIBLE
             }
@@ -93,12 +100,15 @@ class QuizzFragment : Fragment() {
             if (this.currentQuest!!.correct == 2) {
                 this.tabLab[1].text = "Bien joué !!!"
                 this.score += 1
+                this.tabAn[1].getBackground().setColorFilter(0xFF00FF00.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[2].visibility = View.INVISIBLE
             } else if (this.currentQuest!!.correct == 1) {
+                this.tabAn[0].getBackground().setColorFilter(0xFFFF0000.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[1].visibility = View.INVISIBLE
                 this.tabAn[2].visibility = View.INVISIBLE
             } else {
+                this.tabAn[2].getBackground().setColorFilter(0xFFFF0000.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[1].visibility = View.INVISIBLE
                 this.tabAn[0].visibility = View.INVISIBLE
             }
@@ -110,12 +120,15 @@ class QuizzFragment : Fragment() {
             if (this.currentQuest!!.correct == 3) {
                 this.tabLab[1].text = "Bien joué !!!"
                 this.score += 1
+                this.tabAn[2].getBackground().setColorFilter(0xFF00FF00.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[1].visibility = View.INVISIBLE
             } else if (this.currentQuest!!.correct == 1) {
+                this.tabAn[0].getBackground().setColorFilter(0xFFFF0000.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[1].visibility = View.INVISIBLE
                 this.tabAn[2].visibility = View.INVISIBLE
             } else {
+                this.tabAn[1].getBackground().setColorFilter(0xFFFF0000.toInt(), PorterDuff.Mode.MULTIPLY)
                 this.tabAn[0].visibility = View.INVISIBLE
                 this.tabAn[2].visibility = View.INVISIBLE
             }
@@ -271,6 +284,9 @@ class QuizzFragment : Fragment() {
         this.tabAn[2].text = movies_str[movie_c + 2]
         movie_c += 3
         // Buttons Show
+        this.tabAn[0].getBackground().setColorFilter(0xFFCCCCCC.toInt(), PorterDuff.Mode.MULTIPLY)
+        this.tabAn[1].getBackground().setColorFilter(0xFFCCCCCC.toInt(), PorterDuff.Mode.MULTIPLY)
+        this.tabAn[2].getBackground().setColorFilter(0xFFCCCCCC.toInt(), PorterDuff.Mode.MULTIPLY)
         this.tabAn[0].visibility = View.VISIBLE
         this.tabAn[1].visibility = View.VISIBLE
         this.tabAn[2].visibility = View.VISIBLE
