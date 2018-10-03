@@ -2,7 +2,7 @@
 
 * Theo Issarni issarn_t
 * Rodolphe Guillaume guilla_w
-* Marc Sidorenko sidoren_m
+* Marc Sidorenko sidore_m
 
 # Resources
 > @David: Just ignore this part, I just want to keep these links in my repo
